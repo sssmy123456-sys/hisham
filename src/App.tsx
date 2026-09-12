@@ -1,7 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Ticket } from './types';
 import { getStoredTickets, saveTicketsToStorage } from './utils/helpers';
 import { INITIAL_TICKETS } from './data/mockData';
+import { 
+  fetchTicketsApi, 
+  createTicketApi, 
+  updateTicketApi, 
+  resetTicketsApi 
+} from './services/ticketsApi';
 import { Header } from './components/Header';
 import { SubmitTicketView } from './components/SubmitTicketView';
 import { TrackTicketView } from './components/TrackTicketView';
@@ -20,7 +26,8 @@ import {
   Lock,
   LogOut,
   ShieldCheck,
-  UserCheck
+  UserCheck,
+  Database
 } from 'lucide-react';
 
 export default function App() {
@@ -34,10 +41,41 @@ export default function App() {
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState<boolean>(false);
 
-  // Sync with localStorage
+  // Live multi-device sync state
+  const [syncState, setSyncState] = useState<'synced' | 'syncing' | 'offline'>('synced');
+
+  // Multi-device sync function
+  const triggerSync = useCallback(async (showLoading = false) => {
+    if (showLoading) setSyncState('syncing');
+    try {
+      const { tickets: serverTickets, fromServer } = await fetchTicketsApi();
+      if (fromServer) {
+        setSyncState('synced');
+        setTickets((prev) => {
+          if (JSON.stringify(prev) !== JSON.stringify(serverTickets)) {
+            return serverTickets;
+          }
+          return prev;
+        });
+      } else {
+        setSyncState('offline');
+      }
+    } catch (err) {
+      console.warn('Sync failed:', err);
+      setSyncState('offline');
+    }
+  }, []);
+
+  // Initial fetch and 3-second live polling loop across all devices
   useEffect(() => {
-    saveTicketsToStorage(tickets);
-  }, [tickets]);
+    triggerSync(true);
+
+    const interval = setInterval(() => {
+      triggerSync(false);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [triggerSync]);
 
   // If user tries to open tech or stats while not admin, redirect or open login
   useEffect(() => {
@@ -51,14 +89,20 @@ export default function App() {
     (t) => t.status === 'new' || t.status === 'in_progress' || t.status === 'assigned' || t.status === 'waiting_parts'
   ).length;
 
-  const handleTicketCreated = (newTicket: Ticket) => {
-    setTickets((prev) => [newTicket, ...prev]);
+  const handleTicketCreated = async (newTicket: Ticket) => {
+    // 1. Optimistic instant local update
+    setTickets((prev) => [newTicket, ...prev.filter(t => t.id !== newTicket.id)]);
+    // 2. Persist to unified server database so all other devices see it
+    await createTicketApi(newTicket);
   };
 
-  const handleUpdateTicket = (updated: Ticket) => {
+  const handleUpdateTicket = async (updated: Ticket) => {
+    // 1. Optimistic instant local update
     setTickets((prev) =>
       prev.map((t) => (t.id === updated.id ? updated : t))
     );
+    // 2. Persist to unified server database
+    await updateTicketApi(updated);
   };
 
   const handleNavigateToTrack = (ticketId: string) => {
@@ -71,11 +115,11 @@ export default function App() {
     setActiveTab('submit');
   };
 
-  const handleResetDemoData = () => {
-    if (window.confirm('هل تريد إعادة تعيين كافة البلاغات إلى البيانات الافتراضية للمشروع؟')) {
-      localStorage.removeItem('it_support_tickets_v1');
-      setTickets(INITIAL_TICKETS);
-      alert('تمت استعادة البيانات الافتراضية بنجاح.');
+  const handleResetDemoData = async () => {
+    if (window.confirm('هل تريد مسح وإعادة ضبط قاعدة البيانات الموحدة لكافة الأجهزة؟')) {
+      await resetTicketsApi();
+      setTickets([]);
+      alert('تمت إعادة ضبط وتصفير قاعدة البيانات المشتركة بنجاح.');
     }
   };
 
@@ -100,6 +144,8 @@ export default function App() {
           setIsAdmin(false);
           setActiveTab('submit');
         }}
+        syncState={syncState}
+        onManualSync={() => triggerSync(true)}
       />
 
       {/* Main View Container */}
@@ -215,17 +261,23 @@ export default function App() {
 
             <button
               onClick={handleResetDemoData}
-              className="flex items-center gap-1 text-slate-500 hover:text-slate-300 transition"
-              title="إعادة تعيين البيانات الافتراضية"
+              className="flex items-center gap-1 text-slate-500 hover:text-red-400 transition text-[11px]"
+              title="تصفير قاعدة البيانات الموحدة لجميع الأجهزة"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>استعادة البيانات النموذجية</span>
+              <RotateCcw className="w-3 h-3" />
+              <span>تصفير قاعدة البيانات الموحدة</span>
             </button>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-800/60 text-center text-[11px] text-slate-500">
-          تم تصميم وبناء هذا النظام لخدمة مشاريع التخرج ومقررات الدعم الفني، وشبكات الحاسب، وصيانة الحواسب الشخصية وأنظمة التشغيل.
+        <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
+          <div>
+            تم تصميم وبناء هذا النظام لخدمة مشاريع التخرج ومقررات الدعم الفني، وشبكات الحاسب، وصيانة الحواسب الشخصية.
+          </div>
+          <div className="flex items-center gap-2 text-slate-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>نظام التخزين: سحابي موحد (Shared Cloud Storage) - تظهر البلاغات على جميع الأجهزة فورياً</span>
+          </div>
         </div>
       </footer>
     </div>

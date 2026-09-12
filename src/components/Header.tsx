@@ -11,7 +11,9 @@ import {
   Lock,
   LogOut,
   ShieldCheck,
-  UserCheck
+  UserCheck,
+  RefreshCw,
+  Database
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -21,6 +23,8 @@ interface HeaderProps {
   isAdmin: boolean;
   onOpenAdminLogin: () => void;
   onAdminLogout: () => void;
+  syncState?: 'synced' | 'syncing' | 'offline';
+  onManualSync?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({ 
@@ -29,7 +33,9 @@ export const Header: React.FC<HeaderProps> = ({
   openTicketsCount,
   isAdmin,
   onOpenAdminLogin,
-  onAdminLogout
+  onAdminLogout,
+  syncState = 'synced',
+  onManualSync
 }) => {
   return (
     <header className="bg-slate-900 text-white shadow-xl sticky top-0 z-50 border-b border-slate-800">
@@ -47,8 +53,33 @@ export const Header: React.FC<HeaderProps> = ({
             </span>
           </div>
 
-          <div className="flex items-center gap-4 text-xs">
-            <div className="flex items-center gap-1.5 text-slate-300">
+          <div className="flex items-center gap-3 text-xs">
+            {/* Unified Storage Multi-Device Sync Indicator */}
+            <div 
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border transition ${
+                syncState === 'synced'
+                  ? 'bg-emerald-950/40 text-emerald-300 border-emerald-800/60'
+                  : syncState === 'syncing'
+                  ? 'bg-cyan-950/40 text-cyan-300 border-cyan-800/60'
+                  : 'bg-amber-950/40 text-amber-300 border-amber-800/60'
+              }`}
+              title="مزامنة فورية مشتركة بين جميع الأجهزة (خادم موحد)"
+            >
+              <Database className="w-3 h-3 text-emerald-400" />
+              <span>قاعدة موحدة مشتركة</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              {onManualSync && (
+                <button
+                  onClick={onManualSync}
+                  className="hover:text-white p-0.5 rounded transition ml-0.5"
+                  title="تحديث ومزامنة فورية الآن"
+                >
+                  <RefreshCw className={`w-2.5 h-2.5 ${syncState === 'syncing' ? 'animate-spin' : ''}`} />
+                </button>
+              )}
+            </div>
+
+            <div className="hidden md:flex items-center gap-1.5 text-slate-300">
               <PhoneCall className="w-3.5 h-3.5 text-emerald-400" />
               <span>هاتف الدعم الداخلي:</span>
               <span className="font-mono text-emerald-400 dir-ltr font-semibold">ext. 4000</span>

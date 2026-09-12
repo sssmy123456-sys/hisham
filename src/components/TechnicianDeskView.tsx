@@ -135,22 +135,24 @@ export const TechnicianDeskView: React.FC<TechnicianDeskViewProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 space-y-6">
-      {/* Top Banner with KPIs */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      {/* Top Banner */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-200">
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-            <Wrench className="w-6 h-6 text-cyan-600" />
-            <span>لوحة تحكم فنيي ومشرفي الدعم الفني</span>
-          </h2>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>لوحة الفنيين</span>
+            <span className="text-[11px] font-semibold text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-full">
+              إدارة الصيانة
+            </span>
+          </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            إدارة تذاكر الصيانة، فرز الأعطال، وتعيين المهام وتوثيق الحلول الفنية
+            متابعة البلاغات وتعيين الفنيين وتحديث مراحل الإصلاح وقطع الغيار
           </p>
         </div>
 
         {criticalCount > 0 && (
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-red-50 text-red-700 border border-red-200 rounded-xl text-xs font-bold animate-pulse">
-            <AlertTriangle className="w-4 h-4 text-red-600" />
-            <span>يوجد {criticalCount} بلاغ بحالة حرجة يتطلب التدخل الفوري!</span>
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-700 border border-red-200 rounded-lg text-xs font-bold animate-pulse">
+            <AlertTriangle className="w-3.5 h-3.5 text-red-600" />
+            <span>{criticalCount} بلاغ بحالة حرجة!</span>
           </div>
         )}
       </div>

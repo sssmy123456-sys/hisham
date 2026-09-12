@@ -56,23 +56,25 @@ export const StatsReportsView: React.FC<StatsReportsViewProps> = ({ tickets }) =
   return (
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 space-y-6">
       {/* Top Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-200">
         <div>
-          <h2 className="text-xl sm:text-2xl font-black text-slate-900 flex items-center gap-2">
-            <BarChart3 className="w-6 h-6 text-cyan-600" />
-            <span>لوحة المؤشرات والتقارير الإحصائية لقسم الدعم الفني</span>
-          </h2>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>التقارير والمؤشرات</span>
+            <span className="text-[11px] font-semibold text-cyan-700 bg-cyan-50 border border-cyan-200 px-2 py-0.5 rounded-full">
+              إحصائيات الأداء
+            </span>
+          </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            تحليل معدلات الأعطال وزمن الاستجابة وأداء الفنيين في صيانة أجهزة المعامل والمكاتب
+            مؤشرات إنجاز البلاغات، توزيع الأعطال الفنية، وأداء فرق الصيانة الميدانية
           </p>
         </div>
 
         <button
           onClick={() => window.print()}
-          className="self-start sm:self-auto flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-semibold shadow-sm transition"
+          className="self-start sm:self-auto flex items-center gap-2 px-3.5 py-1.5 bg-slate-900 hover:bg-slate-800 text-white rounded-lg text-xs font-semibold shadow-sm transition"
         >
-          <Printer className="w-4 h-4 text-cyan-400" />
-          <span>طباعة التقرير الشامل</span>
+          <Printer className="w-3.5 h-3.5 text-cyan-400" />
+          <span>طباعة التقرير</span>
         </button>
       </div>
 

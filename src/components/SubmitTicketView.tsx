@@ -259,66 +259,56 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
 
   return (
     <div className="max-w-4xl mx-auto py-6 px-4 sm:px-6">
-      {/* Page Title & Hero */}
-      <div className="mb-6 bg-gradient-to-l from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-3 border border-cyan-500/30">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>البوابة العامة للزوار والدكاترة والطلاب</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold mb-2">
-            تقديم بلاغ عطل فني لحاسب آلي أو شبكة
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-            مرحباً بكم. هذه المنصة مخصصة لأعضاء هيئة التدريس (الدكاترة الكرام)، الطلاب، ومنسوبي الكلية والزوار لتسجيل طلبات الصيانة الفنية ومعالجة الأعطال بشكل فوري.
-          </p>
-
-          {/* Quick Presets for demonstration */}
-          <div className="mt-4 pt-4 border-t border-slate-700/60 flex flex-wrap items-center gap-2 text-xs">
-            <span className="text-slate-400 font-semibold flex items-center gap-1">
-              نماذج سريعة للتجربة:
+      {/* Sleek Support Desk Header */}
+      <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-3 pb-3 border-b border-slate-200">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>تقديم بلاغ دعم فني</span>
+            <span className="text-[11px] font-semibold text-cyan-700 bg-cyan-50 border border-cyan-200 px-2 py-0.5 rounded-full">
+              تذكرة صيانة
             </span>
-            <button
-              type="button"
-              onClick={() => loadPreset('faculty' as any)}
-              className="px-2.5 py-1 bg-cyan-900/60 hover:bg-cyan-800 border border-cyan-500/50 rounded-lg text-cyan-200 font-bold transition flex items-center gap-1"
-            >
-              👨‍🏫 عطل قاعة المحاضرات (دكتور)
-            </button>
-            <button
-              type="button"
-              onClick={() => loadPreset('hardware')}
-              className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-slate-200 transition"
-            >
-              ⚡ عطل باور PC
-            </button>
-            <button
-              type="button"
-              onClick={() => loadPreset('network')}
-              className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-slate-200 transition"
-            >
-              🌐 انقطاع شبكة القاعة
-            </button>
-            <button
-              type="button"
-              onClick={() => loadPreset('printer')}
-              className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-slate-200 transition"
-            >
-              🖨️ انحشار ورق طابعة
-            </button>
-            <button
-              type="button"
-              onClick={() => loadPreset('software')}
-              className="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-slate-200 transition"
-            >
-              💻 شاشة زرقاء BSOD
-            </button>
-          </div>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            سجّل العطل الفني لمباشرة الفحص والصيانة الميدانية في أسرع وقت
+          </p>
+        </div>
+
+        {/* Quick Test Presets */}
+        <div className="flex items-center gap-1.5 overflow-x-auto py-1 text-xs">
+          <span className="text-slate-400 font-medium text-[11px] whitespace-nowrap pl-1">نماذج سريعة:</span>
+          <button
+            type="button"
+            onClick={() => loadPreset('faculty' as any)}
+            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition text-xs whitespace-nowrap border border-slate-200/80"
+          >
+            قاعة محاضرات
+          </button>
+          <button
+            type="button"
+            onClick={() => loadPreset('hardware')}
+            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition text-xs whitespace-nowrap border border-slate-200/80"
+          >
+            عطل باور
+          </button>
+          <button
+            type="button"
+            onClick={() => loadPreset('network')}
+            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition text-xs whitespace-nowrap border border-slate-200/80"
+          >
+            انقطاع شبكة
+          </button>
+          <button
+            type="button"
+            onClick={() => loadPreset('printer')}
+            className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-medium transition text-xs whitespace-nowrap border border-slate-200/80"
+          >
+            طابعة
+          </button>
         </div>
       </div>
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8 space-y-8" id="submit-ticket-form">
+      <form onSubmit={handleSubmit} className="bg-white rounded-2xl shadow-sm border border-slate-200/90 p-5 sm:p-7 space-y-7" id="submit-ticket-form">
         
         {/* Step 1: Category Selection */}
         <div>

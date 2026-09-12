@@ -146,35 +146,39 @@ export const TrackTicketView: React.FC<TrackTicketViewProps> = ({
 
   return (
     <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6">
-      {/* Search Header */}
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sm:p-6 mb-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
-            الاستعلام ومتابعة حالة بلاغات الصيانة
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-500 mb-4">
-            أدخل رقم التتبع (مثل TCK-2025-101)، أو الرقم الوظيفي، أو رقم الجوال للاطلاع على خط سير البلاغ
+      {/* Search & Header */}
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-3 border-b border-slate-200">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>متابعة حالة البلاغات</span>
+            <span className="text-[11px] font-semibold text-slate-600 bg-slate-100 border border-slate-200 px-2 py-0.5 rounded-full">
+              {filteredTickets.length} بلاغ
+            </span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            استعلم برقم البلاغ، الاسم، الجوال أو القاعة لمتابعة خط سير الصيانة
           </p>
+        </div>
 
-          <div className="relative flex items-center">
-            <input
-              type="text"
-              id="search-ticket-input"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ابحث برقم التذكرة أو الاسم أو الموقع..."
-              className="w-full pl-10 pr-12 py-3 bg-slate-50 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/30 focus:border-cyan-600 shadow-inner"
-            />
-            <Search className="w-5 h-5 text-slate-400 absolute right-4 pointer-events-none" />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery('')}
-                className="absolute left-3 text-xs bg-slate-200 hover:bg-slate-300 text-slate-600 rounded-full px-2 py-0.5"
-              >
-                مسح
-              </button>
-            )}
-          </div>
+        {/* Compact Search Bar */}
+        <div className="relative w-full sm:w-80">
+          <input
+            type="text"
+            id="search-ticket-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="بحث برقم التذكرة، الاسم أو القاعة..."
+            className="w-full pl-9 pr-9 py-2 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-600 shadow-sm"
+          />
+          <Search className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-600 rounded px-1.5 py-0.5"
+            >
+              مسح
+            </button>
+          )}
         </div>
       </div>
 

@@ -78,17 +78,16 @@ export const DiagnosticWizardView: React.FC<DiagnosticWizardViewProps> = ({
   return (
     <div className="max-w-3xl mx-auto py-6 px-4 sm:px-6 space-y-6">
       {/* Title & Introduction */}
-      <div className="bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden">
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-semibold mb-3 border border-emerald-500/30">
-            <Zap className="w-3.5 h-3.5" />
-            <span>نظام التشخيص الآلي واستكشاف الأعطال (Triage Wizard)</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold mb-2">
-            الفاحص الذكي لأعطال الحاسب والشبكات
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-            أداة تفاعلية تفحص المشكلة معك خطوة بخطوة وتقدم حلولاً فورية مجربة لأشهر الأعطال، مع إمكانية تحويل النتائج لتذكرة صيانة بنقرة واحدة إذا استعصى الحل.
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-3 border-b border-slate-200">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>الفاحص الذكي للأعطال</span>
+            <span className="text-[11px] font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-full">
+              تشخيص تفاعلي
+            </span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            خطوات سريعة لاكتشاف الخلل وحله فورياً أو تحويله مباشرة إلى بلاغ صيانة
           </p>
         </div>
       </div>

@@ -56,31 +56,38 @@ export const KnowledgeBaseView: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto py-6 px-4 sm:px-6 space-y-6">
-      {/* Hero Header */}
-      <div className="bg-slate-900 text-white rounded-2xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
-        <div className="max-w-2xl relative z-10">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-3 border border-cyan-500/30">
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>قاعدة المعارف والدليل الفني للحلول السريعة</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-black mb-2">
-            دليل استكشاف وصيانة أعطال الحاسب الآلي
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            مكتبة مرجعية شاملة لطلاب وفنيي تخصص الدعم الفني، تحتوي على خطوات معالجة مشاكل الإقلاع، أوامر موجه الأوامر CMD للشبكات، وحلول أعطال الطابعات وأنظمة التشغيل.
+      {/* Sleek Support Desk Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 pb-3 border-b border-slate-200">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+            <span>دليل الحلول السريعة</span>
+            <span className="text-[11px] font-semibold text-cyan-700 bg-cyan-50 border border-cyan-200 px-2 py-0.5 rounded-full">
+              قاعدة المعرفة
+            </span>
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            حلول معتمدة وأوامر فنية لمعالجة أعطال الحواسب والشبكات والطابعات
           </p>
+        </div>
 
-          {/* Search bar */}
-          <div className="mt-5 relative">
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ابحث في الحلول والأوامر (مثل: ping، شاشة زرقاء، انحشار ورق، RAM)..."
-              className="w-full pl-4 pr-11 py-3 bg-slate-800/90 text-white border border-slate-700 rounded-xl text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-slate-800 shadow-inner"
-            />
-            <Search className="w-5 h-5 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          </div>
+        {/* Compact Search Bar */}
+        <div className="relative w-full md:w-80">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="ابحث في الحلول والأوامر..."
+            className="w-full pl-9 pr-9 py-2 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 focus:border-cyan-600 shadow-sm"
+          />
+          <Search className="w-4 h-4 text-slate-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery('')}
+              className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-600 rounded px-1.5 py-0.5"
+            >
+              مسح
+            </button>
+          )}
         </div>
       </div>
 

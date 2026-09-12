@@ -214,69 +214,36 @@ export default function App() {
       />
 
       {/* Footer (No-Print) */}
-      <footer className="no-print bg-slate-900 text-slate-400 text-xs border-t border-slate-800 mt-12 py-8 px-4">
+      <footer className="no-print bg-slate-900 text-slate-400 text-xs border-t border-slate-800/80 mt-12 py-6 px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-cyan-600/20 text-cyan-400 flex items-center justify-center font-bold">
+            <div className="w-7 h-7 rounded-lg bg-cyan-600/20 text-cyan-400 flex items-center justify-center font-bold">
               <MonitorCheck className="w-4 h-4" />
             </div>
             <div>
-              <span className="font-bold text-slate-200 block">
-                مشروع تخصص الدعم الفني للحاسب الآلي والشبكات
+              <span className="font-semibold text-slate-200 block text-xs">
+                منظومة الدعم الفني والصيانة
               </span>
               <span className="text-[11px] text-slate-500">
-                البوابة الموحدة لخدمة الزوار، الطلاب، وأعضاء هيئة التدريس (الدكاترة)
+                إدارة بلاغات وأعطال أجهزة الحاسب والشبكات
               </span>
             </div>
           </div>
 
-          {/* Status Indicator & Admin Portal Access */}
-          <div className="flex flex-wrap items-center gap-3 text-xs">
-            {!isAdmin ? (
-              <button
-                onClick={() => setIsAdminLoginOpen(true)}
-                className="flex items-center gap-1.5 text-cyan-300 hover:text-cyan-200 bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg transition"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>دخول الإدارة والفنيين</span>
-              </button>
-            ) : (
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-400 bg-emerald-950/60 border border-emerald-800 px-2.5 py-1 rounded-lg flex items-center gap-1 text-[11px]">
-                  <ShieldCheck className="w-3.5 h-3.5" />
-                  <span>لوحة الإدارة نشطة</span>
-                </span>
-                <button
-                  onClick={() => {
-                    setIsAdmin(false);
-                    setActiveTab('submit');
-                  }}
-                  className="text-red-300 hover:text-red-200 bg-red-950/40 border border-red-800/40 px-2 py-1 rounded text-[11px] transition flex items-center gap-1"
-                >
-                  <LogOut className="w-3 h-3" />
-                  <span>الخروج للواجهة العامة</span>
-                </button>
-              </div>
-            )}
+          <div className="flex items-center gap-4 text-xs">
+            <div className="flex items-center gap-1.5 text-slate-400 text-[11px]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>خادم موحد مشترك</span>
+            </div>
 
             <button
               onClick={handleResetDemoData}
-              className="flex items-center gap-1 text-slate-500 hover:text-red-400 transition text-[11px]"
-              title="تصفير قاعدة البيانات الموحدة لجميع الأجهزة"
+              className="text-slate-500 hover:text-red-400 transition text-[11px] flex items-center gap-1"
+              title="تصفير قاعدة البيانات الموحدة"
             >
               <RotateCcw className="w-3 h-3" />
-              <span>تصفير قاعدة البيانات الموحدة</span>
+              <span>تصفير البيانات</span>
             </button>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto mt-6 pt-4 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-2 text-[11px] text-slate-500">
-          <div>
-            تم تصميم وبناء هذا النظام لخدمة مشاريع التخرج ومقررات الدعم الفني، وشبكات الحاسب، وصيانة الحواسب الشخصية.
-          </div>
-          <div className="flex items-center gap-2 text-slate-400">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>نظام التخزين: سحابي موحد (Shared Cloud Storage) - تظهر البلاغات على جميع الأجهزة فورياً</span>
           </div>
         </div>
       </footer>

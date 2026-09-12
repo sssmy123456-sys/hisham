@@ -1,20 +1,22 @@
 import { Ticket, TicketCategory, TicketPriority, TicketStatus, DeviceType } from '../types';
 import { INITIAL_TICKETS } from '../data/mockData';
 
-const STORAGE_KEY = 'it_support_tickets_v1';
+const STORAGE_KEY = 'it_support_tickets_clean_v1';
 
 export function getStoredTickets(): Ticket[] {
   try {
+    // Clear old sample mock storage if present
+    localStorage.removeItem('it_support_tickets_v1');
+    
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
+    if (saved !== null) {
       return JSON.parse(saved);
     }
   } catch (e) {
     console.error('Error loading tickets from storage', e);
   }
-  // Initialize with initial tickets
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(INITIAL_TICKETS));
-  return INITIAL_TICKETS;
+  // Brand new visit: completely empty list of tickets
+  return [];
 }
 
 export function saveTicketsToStorage(tickets: Ticket[]): void {

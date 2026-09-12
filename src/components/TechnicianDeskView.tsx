@@ -289,7 +289,19 @@ export const TechnicianDeskView: React.FC<TechnicianDeskViewProps> = ({
           </span>
         </div>
 
-        {filteredTickets.length === 0 ? (
+        {tickets.length === 0 ? (
+          <div className="p-16 text-center space-y-3">
+            <div className="w-14 h-14 bg-slate-100 rounded-2xl text-slate-400 flex items-center justify-center mx-auto shadow-inner">
+              <Package className="w-7 h-7 text-cyan-600" />
+            </div>
+            <h4 className="text-base font-bold text-slate-900">
+              صندوق طلبات الصيانة وقوائم الانتظار فارغ تماماً
+            </h4>
+            <p className="text-xs text-slate-500 max-w-md mx-auto leading-relaxed">
+              لا توجد أي طلبات أو بلاغات صيانة مسجلة حتى الآن. ستظهر بلاغات الزوار والدكاترة والطلاب هنا مباشرة فور قيامهم برفع طلب جديد عبر النموذج.
+            </p>
+          </div>
+        ) : filteredTickets.length === 0 ? (
           <div className="p-12 text-center text-slate-400 text-sm">
             لا توجد بلاغات تطابق الفلاتر المحددة حالياً.
           </div>

@@ -32,13 +32,15 @@ interface TrackTicketViewProps {
   initialSearchId?: string;
   onUpdateTicket: (updated: Ticket) => void;
   onPrintTicket: (ticket: Ticket) => void;
+  onNavigateToSubmit?: () => void;
 }
 
 export const TrackTicketView: React.FC<TrackTicketViewProps> = ({
   tickets,
   initialSearchId = '',
   onUpdateTicket,
-  onPrintTicket
+  onPrintTicket,
+  onNavigateToSubmit
 }) => {
   const [searchQuery, setSearchQuery] = useState(initialSearchId);
   const [selectedTicketId, setSelectedTicketId] = useState<string | null>(
@@ -50,6 +52,35 @@ export const TrackTicketView: React.FC<TrackTicketViewProps> = ({
   const [ratingVal, setRatingVal] = useState<number>(5);
   const [ratingComment, setRatingComment] = useState('');
   const [ratingSubmitted, setRatingSubmitted] = useState(false);
+
+  // If no tickets exist at all in the system
+  if (tickets.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto py-16 px-4">
+        <div className="bg-white rounded-3xl border border-slate-200 shadow-sm p-8 sm:p-12 text-center space-y-4">
+          <div className="w-16 h-16 bg-slate-100 rounded-2xl text-slate-400 flex items-center justify-center mx-auto shadow-inner">
+            <FileText className="w-8 h-8 text-cyan-600" />
+          </div>
+          <h2 className="text-xl font-bold text-slate-900">
+            لا توجد أي بلاغات مسجلة حالياً
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto leading-relaxed">
+            قائمة متابعة البلاغات فارغة تماماً. ستظهر تفاصيل وحالة البلاغ هنا مباشرة بمجرد قيامك أو قيام الدكتور برفع بلاغ عطل فني جديد عبر النموذج.
+          </p>
+          {onNavigateToSubmit && (
+            <div className="pt-3">
+              <button
+                onClick={onNavigateToSubmit}
+                className="px-5 py-2.5 bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold rounded-xl shadow transition"
+              >
+                تقديم بلاغ عطل جديد الآن
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   // Filter tickets based on query
   const filteredTickets = tickets.filter((t) => {

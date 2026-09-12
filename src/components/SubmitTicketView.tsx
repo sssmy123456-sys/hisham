@@ -69,9 +69,13 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
       setTitle('الجهاز لا يستجيب للتشغيل ومصباح الباور مطفأ');
       setDescription('عند الضغط على زر الطاقة في كيس الحاسب لا تصدر أي استجابة، المراوح متوقفة ولا توجد إضاءة. تم تجربة مقبس كهرباء آخر.');
       setBuildingRoom('مبنى الحاسب - معمل 102');
-      setRequesterName('م. عبد الرحمن الشهري');
-      setEmployeeId('STU-7821');
-      setPhone('0551122334');
+    } else if (type === 'faculty' as any) {
+      setCategory('hardware');
+      setDeviceType('projector');
+      setPriority('critical');
+      setTitle('عطل جهاز العرض (Data Show) وانقطاع الصوت بقاعة المحاضرات الرئيسية');
+      setDescription('البروجكتر يصدر وميض لمبة Lamp حمراء ولا يعرض شاشة اللابتوب، ونظام الصوت بالقاعة لا يعمل قبل بدء محاضرة المقرر.');
+      setBuildingRoom('مبنى الكلية - مدرج المحاضرات 101');
     } else if (type === 'network') {
       setCategory('network');
       setDeviceType('network_device');
@@ -79,9 +83,6 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
       setTitle('انقطاع الإنترنت وظهور علامة التعجب الصفراء بالمعمل');
       setDescription('فقدان الاتصال بالشبكة المحلية وتعذر الدخول على البوابة الجامعية، الأجهزة أخذت IP تلقائي 169.254.x.x');
       setBuildingRoom('المبنى الرئيسي - معمل الشبكات 204');
-      setRequesterName('د. إبراهيم الخالدي');
-      setEmployeeId('EMP-3312');
-      setPhone('0504455667');
     } else if (type === 'printer') {
       setCategory('printers');
       setDeviceType('printer');
@@ -89,9 +90,6 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
       setTitle('طابعة HP متعددة المهام متوقفة وتعطي رسالة خطأ انحشار الورق');
       setDescription('تظهر رسالة Paper Jam في الشاشة الصغيرة رغم التأكد من خلو المسار، وتصدر صوت تكتكة عند محاولة سحب الورق.');
       setBuildingRoom('مبنى الإدارة - مكتب القبول والتسجيل');
-      setRequesterName('أ. هند العتيبي');
-      setEmployeeId('EMP-6019');
-      setPhone('0567788990');
     } else if (type === 'software') {
       setCategory('software');
       setDeviceType('desktop');
@@ -100,9 +98,6 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
       setDescription('النظام ينهار فجأة وتظهر رسالة CRITICAL_PROCESS_DIED مع رمز التوقف، ويعيد التشغيل التلقائي.');
       setErrorCode('0x000000EF');
       setBuildingRoom('مبنى ب - معمل 305');
-      setRequesterName('خالد بن ناصر');
-      setEmployeeId('STU-9902');
-      setPhone('0545566778');
     }
   };
 
@@ -269,13 +264,13 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
         <div className="relative z-10">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-semibold mb-3 border border-cyan-500/30">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>نظام تسجيل طلبات الدعم والصيانة</span>
+            <span>البوابة العامة للزوار والدكاترة والطلاب</span>
           </div>
           <h2 className="text-xl sm:text-2xl font-bold mb-2">
             تقديم بلاغ عطل فني لحاسب آلي أو شبكة
           </h2>
           <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-            املأ النموذج أدناه لتسجيل العطل الفني. سيقوم فريق الدعم الفني بفحص البلاغ ومباشرة الإصلاح في أقرب وقت.
+            مرحباً بكم. هذه المنصة مخصصة لأعضاء هيئة التدريس (الدكاترة الكرام)، الطلاب، ومنسوبي الكلية والزوار لتسجيل طلبات الصيانة الفنية ومعالجة الأعطال بشكل فوري.
           </p>
 
           {/* Quick Presets for demonstration */}
@@ -283,6 +278,13 @@ export const SubmitTicketView: React.FC<SubmitTicketViewProps> = ({
             <span className="text-slate-400 font-semibold flex items-center gap-1">
               نماذج سريعة للتجربة:
             </span>
+            <button
+              type="button"
+              onClick={() => loadPreset('faculty' as any)}
+              className="px-2.5 py-1 bg-cyan-900/60 hover:bg-cyan-800 border border-cyan-500/50 rounded-lg text-cyan-200 font-bold transition flex items-center gap-1"
+            >
+              👨‍🏫 عطل قاعة المحاضرات (دكتور)
+            </button>
             <button
               type="button"
               onClick={() => loadPreset('hardware')}

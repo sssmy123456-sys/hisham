@@ -1,0 +1,7 @@
+{
+  "name": "بوابة الدعم الفني للحاسب الآلي",
+  "description": "منظومة إدارة وتقديم بلاغات الدعم الفني وصيانة الحاسب الآلي والشبكات مع لوحة تحكم للفنيين وقاعدة معارف وتشخيص الأعطال",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
